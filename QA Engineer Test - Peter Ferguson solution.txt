@@ -1,0 +1,50 @@
+Feature: Car Registration Cover Lookup
+  Scenario: User enters registration for which cover exists
+    Given the checker is at https://covercheck.vwfsinsuranceportal.co.uk/
+       And the checker is in operation
+
+    When I enter 'OV12UYY'
+       And I click 'Find Vehicle'
+     
+     Then I should see 'Cover start' and a timestamp
+       And I should see 'Cover end' and a timestamp
+	   
+  Scenario: User enters registration for which cover does not exist
+    Given the checker is at https://covercheck.vwfsinsuranceportal.co.uk/
+       And the checker is in operation
+
+    When I enter 'OV12UYZ'
+       And I click 'Find Vehicle'
+     
+     Then I should see 'Sorry record not found' 
+         
+  Scenario: User enters invalid registration
+    Given the checker is at https://covercheck.vwfsinsuranceportal.co.uk/
+       And the checker is in operation
+
+    When I enter '-'
+       And I click 'Find Vehicle'
+     
+     Then I should see 'Please enter a valid car registration' 
+       And I should see the entry box edged in red
+         
+  Scenario: User enters blank registration
+    Given the checker is at https://covercheck.vwfsinsuranceportal.co.uk/
+       And the checker is in operation
+
+    When I enter ' '
+       And I click 'Find Vehicle'
+     
+     Then I should see 'Please enter a valid car registration' 
+       And I should see the entry box edged in red
+          
+  Scenario: User enters over-long registration
+    Given the checker is at https://covercheck.vwfsinsuranceportal.co.uk/
+       And the checker is in operation
+
+    When I enter '999999999999999999999999999999999999999999999999999999999999999999'
+       And I click 'Find Vehicle'
+     
+     Then I should see 'Sorry record not found' 
+         
+   
